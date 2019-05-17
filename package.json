@@ -1,0 +1,80 @@
+{
+  "name": "alpha",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/walmartdigital/look-and-pay-backend#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/walmartdigital/look-and-pay-backend.git"
+  },
+  "dependencies": {
+    "@types/express": "^4.16.1",
+    "axios": "^0.18.0",
+    "axios-mock-adapter": "^1.16.0",
+    "balanced-match": "^1.0.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "graphql-yoga": "^1.17.4",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.11",
+    "luxon": "^1.12.0",
+    "merge-graphql-schemas": "^1.5.8",
+    "mongoose": "^5.5.2",
+    "path": "^0.12.7",
+    "prom-client": "^11.3.0",
+    "q": "^1.5.1",
+    "response-time": "^2.3.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "@types/mongodb": "^3.1.23",
+    "@types/mongoose": "^5.3.26",
+    "@types/node": "^11.12.2",
+    "dotenv": "^7.0.0",
+    "graphql-tools": "^4.0.4",
+    "jest": "^24.5.0",
+    "nodemon": "^1.18.10",
+    "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.1",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.14.0",
+    "typescript": "^3.4.1"
+  },
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "rimraf dist && tsc",
+    "dev": "nodemon --exec ts-node src/index.ts --watch src",
+    "test": "npm run test:server",
+    "test:server": "jest --config=jestconfig.json --runInBand --detectOpenHandles --forceExit",
+    "test:watch": "jest --config=jestconfig.json --runInBand --forceExit --watchAll",
+    "coverage": "jest --coverage"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "collectCoverage": true,
+    "testMatch": [
+      "<rootDir>/test/**/*test.ts?(x)"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/src/controllers/**/*.ts",
+      "<rootDir>/src/graphql/**/*.ts",
+      "<rootDir>/src/requests/**/*.ts"
+    ]
+  }
+}
