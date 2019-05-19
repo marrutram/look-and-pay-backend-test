@@ -11,9 +11,9 @@ require('dotenv').config();
 const db = startDB({
   user: process.env.MONGO_USERNAME || 'graphql', 
   pwd: process.env.MONGO_PASSWORD || 'graphql', 
-  db: process.env.MONGO_DATABASE || 'look-and-pay-backend',
+  db: process.env.MONGO_DATABASE || 'lookAndPay',
   host: process.env.MONGO_SERVICE_HOST || 'mongodb',
-  url:process.env.MONGO_SERVICE_URL || 'localhost:27017' 
+  url:process.env.MONGO_SERVICE_URL || '127.0.0.1:27017' 
 });
 
 const pkg = require('../package.json');
