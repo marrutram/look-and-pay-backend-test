@@ -5,8 +5,13 @@ import { GraphQLServer } from 'graphql-yoga';
 import { default as typeDefs } from './graphql/typeDefs'
 import { default as resolvers } from './graphql/resolvers'
 import { startDB, models } from './db';
-
+import * as AWS from 'aws-sdk';
 require('dotenv').config();
+
+
+if (!AWS.config.region) {
+  AWS.config.update({region:process.env.AWS_DEFAULT_REGION});
+}
 
 const db = startDB({
   user: process.env.MONGO_USERNAME || 'graphql', 
