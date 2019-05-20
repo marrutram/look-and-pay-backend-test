@@ -28,7 +28,7 @@ class Rekognition extends AWS.Rekognition {
       ExternalImageId: username,
       Image: {
         S3Object: {
-          Bucket: "lookandpay",
+          Bucket: process.env.AWS_S3_BUCKET,
           Name: imageUrl
         }
       }
