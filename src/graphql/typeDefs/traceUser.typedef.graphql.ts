@@ -1,26 +1,18 @@
 export default  `
 scalar Date
 
-input ImageInput {
-  name: String
-}
-
-type Image {
-  name: String!
-  created_at: Date,
-  updatedAt: Date
-}
-
 type User {
-  name: String,
-  email: String!
-  images: [Image],
-  created_at: Date,
+  name: String
+  email: String
+  lastnanme: String
+  rut: String
+  urlImagen: String
+  created_at: Date
   updatedAt: Date
 }
 
 type Mutation {
-  updateUser(email: String!, name: String, images: [ImageInput]): Boolean
+  updateUser(email: String, name: String, lastnanme: String, rut: String, urlImagen: String): Boolean
 }
 
 type Query {

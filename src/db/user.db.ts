@@ -1,19 +1,5 @@
 import { Schema, model } from 'mongoose';
 
-const ImagesSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: false,
-  }
-},
-{ 
-  timestamps: { 
-    createdAt: 'created_at',
-    updatedAt: 'updatedAt'
-  } 
-});
-
 const UserSchema = new Schema({
   name: {
     type: String,
@@ -22,13 +8,18 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: false,
     unique: false,
   },
-  images: {
-    type: [ImagesSchema],
-    default: undefined,
-    required: false
+  rut: {
+    type: String,
+    required: false,
+    unique: false,
+  },
+  urlImagen: {
+    type: String,
+    required: false,
+    unique: false,
   }
 },
 { 
