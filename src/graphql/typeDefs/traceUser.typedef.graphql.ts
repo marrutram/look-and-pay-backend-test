@@ -12,7 +12,9 @@ type User {
 }
 
 type Mutation {
-  updateUser(email: String, name: String, lastnanme: String, rut: String, urlImagen: String): Boolean
+  updateUser(email: String, name: String, lastnanme: String, rut: String, urlImagen: String): Boolean,
+  signup(email: String, name: String, lastnanme: String, rut: String, urlImagen: String, password: String):String,
+  login(email: String, password: String ): String
 }
 
 type Query {

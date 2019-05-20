@@ -16,6 +16,10 @@ const UserSchema = new Schema({
     required: false,
     unique: false,
   },
+  password: {
+    type: String,
+    required: false,
+  },
   urlImagen: {
     type: String,
     required: false,

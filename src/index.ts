@@ -5,6 +5,7 @@ import { GraphQLServer } from 'graphql-yoga';
 import { default as typeDefs } from './graphql/typeDefs'
 import { default as resolvers } from './graphql/resolvers'
 import { startDB, models } from './db';
+import { autheticate} from './middleware/autheticate';
 
 require('dotenv').config();
 
@@ -23,7 +24,8 @@ const context = req => ({ ...req, db, models });
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
-  context
+  context,
+  middlewares: [autheticate]
 });
 
 const today = DateTime.utc();  

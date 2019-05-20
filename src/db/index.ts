@@ -1,5 +1,6 @@
 import mongoose = require("mongoose");
 import User from './user.db';
+import Payment from './payment.db';
 
 global.Promise = require("q").Promise;
 mongoose.Promise = global.Promise;
@@ -19,6 +20,7 @@ export const startDB = ({ user, pwd, url, host, db }) => {
 }
 
 export const models = {
-  User
+  User,
+  Payment
 }
 

@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import User from './user.db';
 
 const ProductsSchema = new Schema({
   description: {
@@ -42,7 +41,7 @@ const PaymentsSchema = new Schema({
     unique: false,
   },
   user:  {
-    type: User,
+    type: String,
     required: false,
     unique: false,
   }

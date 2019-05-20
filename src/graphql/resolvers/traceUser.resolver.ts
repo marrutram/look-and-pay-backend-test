@@ -1,5 +1,9 @@
 import { get, map } from 'lodash';
 import User from '../../controllers/user.controller';
+import * as bcrypt from 'bcrypt';
+import * as jsonwebtoken from 'jsonwebtoken';
+require('dotenv').config();
+
 export default {
   Query: {
     users: async (_, args, { models }) => {
@@ -27,6 +31,40 @@ export default {
       }
 
       return true; 
+    },
+
+    signup: async (_, arg, { models }) =>  {
+
+      arg.password  = await bcrypt.hash(arg.password, 10);
+      console.log("arg:", arg);
+      const user = await models.User.create(arg);
+
+      return jsonwebtoken.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: '1y' }
+      )
+    },
+
+    login: async (_, { email, password }, { models }) =>  {
+      const user = await models.User.findOne({ where: { email } })
+
+      if (!user) {
+        throw new Error('No user with that email')
+      }
+
+      const valid = await bcrypt.compare(password, user.password)
+
+      if (!valid) {
+        throw new Error('Incorrect password')
+      }
+
+      return jsonwebtoken.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: '1d' }
+      )
     }
+
   }
 };
