@@ -1,4 +1,5 @@
 import { unionBy, forOwn} from 'lodash';
+import * as aws from 'aws-sdk';
 
 class User {
   private _hello:string;
@@ -15,6 +16,7 @@ class User {
     this._hello = theHello;
   }
   registryImage(){
+    console.log(aws);
     return "hello";
   }
   updateParametersUser(dataInput, dataActual) {
