@@ -1,6 +1,6 @@
 import { unionBy, forOwn} from 'lodash';
 
-class Cart {
+class User {
   private _hello:string;
 
   constructor() {
@@ -14,7 +14,9 @@ class Cart {
   set hello(theHello:string) {
     this._hello = theHello;
   }
-
+  registryImage(){
+    return "hello";
+  }
   updateParametersUser(dataInput, dataActual) {
     forOwn(dataInput, (value, key) => {
       if (key === 'users') {
@@ -27,4 +29,4 @@ class Cart {
   }
 }
 
-export default Cart 
+export default User 
