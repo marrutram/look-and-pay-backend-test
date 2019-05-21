@@ -1,6 +1,7 @@
 import * as AWS from 'aws-sdk';
 import * as mime from 'file-type';
 import * as isBase64 from 'is-base64';
+import { logger } from '../logger';
 
 class Bucket extends AWS.S3 {
   constructor() {
@@ -22,6 +23,7 @@ class Bucket extends AWS.S3 {
       Key: identifier
     };
     try {
+      logger.log({level: 'info', message: 'Bucket - putImage', additional: params });
       data = await this.putObject(params).promise();
     } catch (err) {
       throw new Error(err.message); 

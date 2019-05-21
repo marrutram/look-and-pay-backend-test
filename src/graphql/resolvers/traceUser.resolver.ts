@@ -47,7 +47,8 @@ export default {
         try {
           const imageName = camelCase(`${arg.name}${arg.lastnanme}${arg.email}`);
           const imageUploaded = await bucket.putImage(imageName, arg.urlImagen);
-          data = await rekognition.registerFace(imageUploaded.key, imageUploaded.ETag)
+          data = await rekognition.registerFace(imageUploaded.key, imageUploaded.ETag);
+          console.log("")
           arg["s3ImageName"] = imageUploaded.key;
           const user = await models.User.create(arg);
           

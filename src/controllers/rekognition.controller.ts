@@ -1,5 +1,6 @@
 import * as AWS from 'aws-sdk';
 import { merge } from 'lodash';
+import { logger } from '../logger';
 
 class Rekognition extends AWS.Rekognition {
   constructor() {
@@ -17,6 +18,7 @@ class Rekognition extends AWS.Rekognition {
         }
       }
     };
+    logger.log({level: 'info', message: 'Rekognition - searchFace', additional: params });
     return await this.searchFacesByImage(params).promise();
   }
 
@@ -33,6 +35,7 @@ class Rekognition extends AWS.Rekognition {
         }
       }
     };
+    logger.log({level: 'info', message: 'Rekognition - registerFace', additional: params });
     data = await this.indexFaces(params).promise();
     let face = {
       imageName: imageName,
