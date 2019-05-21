@@ -1,7 +1,9 @@
 import { get, map } from 'lodash';
 import User from '../../controllers/user.controller';
+import Bucket from '../../controllers/bucket.controller';
 import * as bcrypt from 'bcrypt';
 import * as jsonwebtoken from 'jsonwebtoken';
+import { camelCase } from 'lodash';
 require('dotenv').config();
 
 export default {
@@ -37,10 +39,18 @@ export default {
       arg.password = await bcrypt.hash(arg.password, 10);
       console.log("arg:", arg);
       const isRegistered = await models.User.findOne({ email: arg.email });
-
+      
       if (!isRegistered) {
+        const bucket = new Bucket();
+        try {
+          const imageName = camelCase(`${arg.name}${arg.lastnanme}`);
+          const imageUploaded = await bucket.putImage(imageName, arg.urlImagen);
+
+        } catch (err) {
+          throw new Error(err.message); 
+        }
+        
         const user = await models.User.create(arg);
-        console.log(isRegistered);
         return jsonwebtoken.sign(
           { id: user.id, email: user.email },
           process.env.JWT_SECRET,
@@ -55,9 +65,7 @@ export default {
       if (!user) {
         throw new Error('No user with that email')
       }
-
       const valid = await bcrypt.compare(password, user.password)
-
       if (!valid) {
         throw new Error('Incorrect password')
       }

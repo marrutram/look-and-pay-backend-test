@@ -1,5 +1,11 @@
 import * as AWS from 'aws-sdk';
 import Rekognition from '../src/controllers/rekognition.controller';
+import Bucket from '../src/controllers/bucket.controller';
+import * as fs from 'fs';
+import * as path from 'path';
+import { camelCase } from 'lodash';
+
+jest.setTimeout(30000); // Only for s3 upload 
 
 require('dotenv').config();
 if (!AWS.config.region) {
@@ -7,18 +13,32 @@ if (!AWS.config.region) {
 }
 
 describe('Test For register Face', () => {
-  it('Should return ok', async () => {
+  fit('Should return ok', async () => {
     const rekognition = new Rekognition();
-    const imageUrl = "rut.jpg";
-    const username = "rut";
+    const bucket = new Bucket();
+    
+    let userData = {
+      email: "martinezjuana@gmail.com",
+      password: "",
+      name: "juana",
+      lastnanme: "martinez",
+      urlImagen: ""
+    }
+    const imageUrl = "juana.jpg";
+    const folderPictures = path.join(__dirname, '../../pictures/free')
+    
+    const bitmap = await fs.readFileSync(`${folderPictures}/${imageUrl}`, {encoding: 'base64'});
+    expect(bitmap).toBeDefined();
 
-    let data = await rekognition.registerFace(username, imageUrl).catch(err =>{
-      console.error(err);
-
-    });
-    console.log(data);
-
-    expect('test').toEqual('test');   
+    userData.urlImagen = bitmap;
+    const imageName = camelCase(`${userData.name}${userData.lastnanme}${userData.email}`);
+    const imageUploaded = await bucket.putImage(imageName, userData.urlImagen);
+    expect(imageUploaded.key).toBeDefined();
+    expect(imageUploaded.ETag).toBeDefined();
+    console.log(imageUploaded)
+    
+    let data = await rekognition.registerFace(imageUploaded.key, imageUploaded.ETag)
+    expect(data.FaceRecords).toBeDefined();
   });
 })
 
@@ -34,4 +54,6 @@ describe('Test for search Face', () => {
     expect('test').toEqual('test');   
   });
 })
+
+
 
