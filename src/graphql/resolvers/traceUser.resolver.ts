@@ -12,13 +12,13 @@ export default {
     }
   },
   Mutation: {
-    updateUser: async (_, args, { models }) =>  {
+    updateUser: async (_, args, { models }) => {
       const email = get(args, 'email');
 
       const user = new User();
       let dataUser = await models.User.findOne({ email: email });
 
-      if(!dataUser) {
+      if (!dataUser) {
         dataUser = new models.User(args);
       } else {
         user.updateParametersUser(args, dataUser);
@@ -30,24 +30,27 @@ export default {
         throw new Error('Cannot Save Cart!!!');
       }
 
-      return true; 
+      return true;
     },
 
-    signup: async (_, arg, { models }) =>  {
-
-      arg.password  = await bcrypt.hash(arg.password, 10);
+    signup: async (_, arg, { models }) => {
+      arg.password = await bcrypt.hash(arg.password, 10);
       console.log("arg:", arg);
-      const user = await models.User.create(arg);
+      const isRegistered = await models.User.findOne({ email: arg.email });
 
-      return jsonwebtoken.sign(
-        { id: user.id, email: user.email },
-        process.env.JWT_SECRET,
-        { expiresIn: '1y' }
-      )
+      if (!isRegistered) {
+        const user = await models.User.create(arg);
+        console.log(isRegistered);
+        return jsonwebtoken.sign(
+          { id: user.id, email: user.email },
+          process.env.JWT_SECRET,
+          { expiresIn: '1y' });
+      }
+      throw new Error('There is already a user with this email'); 
     },
 
-    login: async (_, { email, password }, { models }) =>  {
-      const user = await models.User.findOne({ email: email})
+    login: async (_, { email, password }, { models }) => {
+      const user = await models.User.findOne({ email: email })
 
       if (!user) {
         throw new Error('No user with that email')

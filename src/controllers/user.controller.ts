@@ -1,5 +1,7 @@
 import { unionBy, forOwn} from 'lodash';
 import * as aws from 'aws-sdk';
+import UserModel from '../db/user.db';
+
 
 class User {
   private _hello:string;
@@ -15,10 +17,12 @@ class User {
   set hello(theHello:string) {
     this._hello = theHello;
   }
+  
   registryImage(){
     console.log(aws);
     return "hello";
   }
+
   updateParametersUser(dataInput, dataActual) {
     forOwn(dataInput, (value, key) => {
       if (key === 'users') {
