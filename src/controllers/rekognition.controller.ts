@@ -1,13 +1,12 @@
 import * as AWS from 'aws-sdk';
 
-
 class Rekognition extends AWS.Rekognition {
   constructor() {
     super()
   }
   async searchFace(imageUrl: string) {
     const params = {
-      CollectionId:  process.env.AWS_REKOGNITION_COLLECTION,
+      CollectionId: process.env.AWS_REKOGNITION_COLLECTION,
       FaceMatchThreshold: 95,
       MaxFaces: 3,
       Image: {
@@ -33,6 +32,7 @@ class Rekognition extends AWS.Rekognition {
         }
       }
     };
+
     // return await this.indexFaces(params).promise();
     return await { SearchedFaceBoundingBox:
       { Width: 0.4138587713241577,
@@ -47,8 +47,7 @@ class Rekognition extends AWS.Rekognition {
   // List all of your available buckets in this AWS Region.
   async listMyBuckets() {
     const s3 = new AWS.S3();
-    const data = await s3.listBuckets().promise();
-    return data;
+    return await s3.listBuckets().promise();
   }
 }
 
