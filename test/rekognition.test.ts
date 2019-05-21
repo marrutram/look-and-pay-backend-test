@@ -23,7 +23,7 @@ describe('Test For register Face', () => {
 })
 
 describe('Test for search Face', () => {
-  fit('Should return ok', async () => {
+  it('Should return ok', async () => {
     const rekognition = new Rekognition();
     const imageUrl = "edwin.jpeg";
     let data = await rekognition.searchFace(imageUrl).catch(err =>{
