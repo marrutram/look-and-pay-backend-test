@@ -3,6 +3,11 @@ import { Schema, model } from 'mongoose';
 const UserSchema = new Schema({
   name: {
     type: String,
+    required: true,
+    unique: true
+  },
+  lastname: {
+    type: String,
     required: false,
     unique: true
   },
@@ -18,15 +23,25 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: false,
+    required: true,
     unique: false
   },
   urlImagen: {
     type: String,
+    required: true,
+    unique: false
+  },
+  nameCard: {
+    type: String,
     required: false,
     unique: false
   },
-  s3ImageName: {
+  numberCard: {
+    type: String,
+    required: false,
+    unique: false
+  },
+  expDateCard: {
     type: String,
     required: false,
     unique: false
