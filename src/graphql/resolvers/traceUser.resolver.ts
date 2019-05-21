@@ -47,7 +47,7 @@ export default {
     },
 
     login: async (_, { email, password }, { models }) =>  {
-      const user = await models.User.findOne({ where: { email } })
+      const user = await models.User.findOne({ email: email})
 
       if (!user) {
         throw new Error('No user with that email')

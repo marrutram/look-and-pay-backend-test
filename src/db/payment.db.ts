@@ -19,7 +19,7 @@ const ProductsSchema = new Schema({
   sku: {
     type: String,
     required: false,
-    unique: false,
+    unique: true,
   }
 },
 { 

@@ -1,15 +1,20 @@
 import * as jwt from 'jsonwebtoken';
-import { get } from 'lodash';
+import { get, indexOf } from 'lodash';
 
 export const autheticate = async (resolve, root, args, context, info) => {
   try {
+    
+    const currentMutation = info.fieldName;
+    const excludeMutation = ['login', 'signup'];
+    const isExclude = indexOf(excludeMutation, currentMutation) > -1 ? true : false;
 
-    const passwordToken = process.env.JWT_SECRET || '';
-    const models = get(context, 'models');
-    const token = checkToken(context);
-    //let dataUser = await models.User.findOne({ token: token });
-
-    //await jwt.verify(token, passwordToken);
+    if(!isExclude) {
+      const passwordToken = process.env.JWT_SECRET || '';
+      const models = get(context, 'models');
+      const token = checkToken(context);
+      await jwt.verify(token, passwordToken);
+    }
+    
   } catch (e) {
     console.log("err the autheticate::", e);
     throw new Error('Not authorise.');

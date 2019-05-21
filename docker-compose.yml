@@ -9,7 +9,7 @@ services:
     environment:
       MONGODB_USERNAME: graphql
       MONGODB_PASSWORD: graphql
-      MONGODB_DATABASE: look-and-pay
+      MONGODB_DATABASE: lookAndPayBackend
     volumes:
       - './containers/mongo:/data/db'
 networks:
