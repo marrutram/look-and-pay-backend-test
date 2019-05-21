@@ -29,7 +29,6 @@ fdescribe('Test Upload image to S3', () => {
     userData.urlImagen = bitmap;
     const imageName = camelCase(`${userData.name}${userData.lastnanme}${userData.email}`);
     const imageUploaded = await bucket.putImage(imageName, userData.urlImagen);
-    console.log(imageUploaded)
     expect(imageUploaded.key).toBeDefined();
   });
 

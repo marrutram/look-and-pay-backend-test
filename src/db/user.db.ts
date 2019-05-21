@@ -4,7 +4,7 @@ const UserSchema = new Schema({
   name: {
     type: String,
     required: false,
-    unique: false
+    unique: true
   },
   email: {
     type: String,
@@ -22,6 +22,11 @@ const UserSchema = new Schema({
     unique: false
   },
   urlImagen: {
+    type: String,
+    required: false,
+    unique: false
+  },
+  s3ImageName: {
     type: String,
     required: false,
     unique: false

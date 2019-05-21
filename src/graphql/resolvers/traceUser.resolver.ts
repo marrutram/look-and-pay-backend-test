@@ -1,6 +1,7 @@
 import { get, map } from 'lodash';
 import User from '../../controllers/user.controller';
 import Bucket from '../../controllers/bucket.controller';
+import Rekognition from '../../controllers/rekognition.controller';
 import * as bcrypt from 'bcrypt';
 import * as jsonwebtoken from 'jsonwebtoken';
 import { camelCase } from 'lodash';
@@ -36,25 +37,27 @@ export default {
     },
 
     signup: async (_, arg, { models }) => {
+      let data = null;
+      const bucket = new Bucket();
+      const rekognition = new Rekognition();
       arg.password = await bcrypt.hash(arg.password, 10);
-      console.log("arg:", arg);
       const isRegistered = await models.User.findOne({ email: arg.email });
       
       if (!isRegistered) {
-        const bucket = new Bucket();
         try {
-          const imageName = camelCase(`${arg.name}${arg.lastnanme}`);
+          const imageName = camelCase(`${arg.name}${arg.lastnanme}${arg.email}`);
           const imageUploaded = await bucket.putImage(imageName, arg.urlImagen);
-
+          data = await rekognition.registerFace(imageUploaded.key, imageUploaded.ETag)
+          arg["s3ImageName"] = imageUploaded.key;
+          const user = await models.User.create(arg);
+          
+          return jsonwebtoken.sign(
+            { id: user.id, email: user.email },
+            process.env.JWT_SECRET,
+            { expiresIn: '1y' });
         } catch (err) {
           throw new Error(err.message); 
         }
-        
-        const user = await models.User.create(arg);
-        return jsonwebtoken.sign(
-          { id: user.id, email: user.email },
-          process.env.JWT_SECRET,
-          { expiresIn: '1y' });
       }
       throw new Error('There is already a user with this email'); 
     },

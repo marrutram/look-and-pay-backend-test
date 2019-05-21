@@ -1,4 +1,5 @@
 import * as AWS from 'aws-sdk';
+import { merge } from 'lodash';
 
 class Rekognition extends AWS.Rekognition {
   constructor() {
@@ -32,9 +33,12 @@ class Rekognition extends AWS.Rekognition {
         }
       }
     };
-    console.log(params);
-
-    return await this.indexFaces(params).promise();
+    data = await this.indexFaces(params).promise();
+    let face = {
+      imageName: imageName,
+      ExternalImageId: params.ExternalImageId,
+    }
+    return merge(data, face);
   }
 
   // List all of your available buckets in this AWS Region.

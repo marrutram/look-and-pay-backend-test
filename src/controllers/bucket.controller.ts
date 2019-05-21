@@ -1,6 +1,6 @@
 import * as AWS from 'aws-sdk';
-import * as mime from 'file-type'
-import * as isBase64 from 'is-base64'
+import * as mime from 'file-type';
+import * as isBase64 from 'is-base64';
 
 class Bucket extends AWS.S3 {
   constructor() {
@@ -9,7 +9,7 @@ class Bucket extends AWS.S3 {
 
   async putImage(identifier:string, base64file:string){
     let data = null;
-    if (!isBase64(base64file)) {
+    if (!isBase64(base64file, {mime: true})) {
       throw new Error("The user's image should be a base64 file");
     }
     const file = await Buffer.from(base64file.replace(/^data:image\/\w+;base64,/, ""), 'base64')
