@@ -6,7 +6,8 @@ import { default as typeDefs } from './graphql/typeDefs'
 import { default as resolvers } from './graphql/resolvers'
 import { startDB, models } from './db';
 import * as AWS from 'aws-sdk';
-import { autheticate} from './middleware/autheticate';
+import { autheticate } from './middleware/autheticate';
+import { httplogger } from './middleware/httplogger';
 
 require('dotenv').config();
 
@@ -31,7 +32,10 @@ const server = new GraphQLServer({
   typeDefs,
   resolvers,
   context,
-  middlewares: [autheticate]
+  middlewares: [
+    autheticate, 
+    httplogger
+  ]
 });
 
 const today = DateTime.utc();  

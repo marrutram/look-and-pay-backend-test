@@ -11,15 +11,13 @@ const ProductsSchema = new Schema({
     required: false,
     unique: false,
   },
-  total: {
+  balance: {
     type: String,
     required: false,
     unique: false,
   },
-  sku: {
+  image: {
     type: String,
-    required: false,
-    unique: true,
   }
 },
 { 
@@ -30,7 +28,7 @@ const ProductsSchema = new Schema({
 });
 
 const PaymentsSchema = new Schema({
-  total: {
+  balance: {
     type: String,
     required: false,
     unique: false,

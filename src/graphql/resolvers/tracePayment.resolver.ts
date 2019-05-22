@@ -7,6 +7,11 @@ export default {
       return Payments;
     }
   },
-  Mutation: {}
+  Mutation: {
+    createPayment: async (_, arg, { models }) => {
+      console.log(arg);
+      return true;
+    }
+  }
 };
 

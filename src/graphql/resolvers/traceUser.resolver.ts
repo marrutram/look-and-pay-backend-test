@@ -16,7 +16,6 @@ export default {
   },
   Mutation: {
     signup: async (_, arg, { models }) => {
-
       let data = null;
       const bucket = new Bucket();
       const rekognition = new Rekognition();

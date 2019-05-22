@@ -3,9 +3,9 @@ scalar Date
 
 input ProductInput {
   description: String
-  count: String
-  total: String
-  sku: String
+  count: Int
+  picture: String
+  balance: String
 }
 
 input UserInput {
@@ -18,24 +18,22 @@ input UserInput {
 
 type Product {
   description: String
-  count: String
-  total: String
-  sku: String
+  count: Int
+  picture: String
+  balance: String
 }
 
-type Payments {
-  total: String
-  products: [Product]
+type Payment {
+  balance: String
   user: User
-  created_at: Date
-  updatedAt: Date
+  products: [Product]
 }
 
 type Mutation {
-  updatePayments(total: String, products: [ProductInput], user: UserInput): Boolean
+  createPayment(balance: String, user: String, products: [ProductInput] ): Boolean
 }
 
 type Query {
-  payments: [Payments!]!
+  payments: [Payment!]!
 }
 `;

@@ -5,7 +5,7 @@ export const autheticate = async (resolve, root, args, context, info) => {
   try {
     
     const currentMutation = info.fieldName;
-    const excludeMutation = ['login', 'signup'];
+    const excludeMutation = ['login', 'signup', 'createPayment'];
     const isExclude = indexOf(excludeMutation, currentMutation) > -1 ? true : false;
 
     if(!isExclude) {
