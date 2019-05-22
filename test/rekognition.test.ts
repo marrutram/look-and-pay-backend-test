@@ -13,7 +13,7 @@ if (!AWS.config.region) {
 }
 
 describe('Test For register Face', () => {
-  fit('Should return ok', async () => {
+  it('Should return ok', async () => {
     const rekognition = new Rekognition();
     const bucket = new Bucket();
     
@@ -28,9 +28,9 @@ describe('Test For register Face', () => {
     const folderPictures = path.join(__dirname, 'images')
 
     const bitmap = await fs.readFileSync(`${folderPictures}/pictures/${imageUrl}`, {encoding: 'base64'});
+    expect(bitmap).toBeDefined();
     await fs.writeFileSync(`${folderPictures}/base64/${imageUrl}-ignore.log`, bitmap, 'utf-8');
 
-    expect(bitmap).toBeDefined();
     userData.urlImagen = bitmap;
     const imageName = camelCase(`${userData.name}${userData.lastnanme}${userData.email}`);
     const imageUploaded = await bucket.putImage(imageName, userData.urlImagen);
@@ -44,12 +44,22 @@ describe('Test For register Face', () => {
 })
 
 describe('Test for search Face', () => {
-  it('Should return ok', async () => {
+  fit('Should return ok', async () => {
     const rekognition = new Rekognition();
-    const imageUrl = "edwin.jpeg";
-    let data = await rekognition.searchFace(imageUrl).catch(err =>{
-      console.error(err);
-    });
+    const bucket = new Bucket();
+    const folderPictures = path.join(__dirname, 'images')
+    const imageUrl = "caro-pago.jpeg";
+
+    const bitmap = await fs.readFileSync(`${folderPictures}/pictures/${imageUrl}`, {encoding: 'base64'});
+    expect(bitmap).toBeDefined();
+    await fs.writeFileSync(`${folderPictures}/base64/${imageUrl}-ignore.log`, bitmap, 'utf-8');
+    const date = new Date();
+    const imageName = `${date.getTime()}-${imageUrl}`;
+    
+    const imageUploaded = await bucket.putImage(imageName, bitmap, "payment");
+    expect(imageUploaded.key).toBeDefined();
+    expect(imageUploaded.ETag).toBeDefined();
+    let data = await rekognition.searchFace(imageUrl)
     console.log(data);
 
     expect('test').toEqual('test');   

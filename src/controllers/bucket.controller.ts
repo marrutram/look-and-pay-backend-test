@@ -8,17 +8,22 @@ class Bucket extends AWS.S3 {
     super()
   }
 
-  async putImage(identifier:string, base64file:string){
+  async putImage(identifier:string, base64file:string, type?:string){
     let data = null;
+    let bucket =  process.env.AWS_S3_BUCKET;
     if (!isBase64(base64file, {mime: true})) {
       throw new Error("The user's image should be a base64 file");
+    }
+
+    if (type === "payment"){
+      bucket =  process.env.AWS_S3_BUCKET_PAYMENT;
     }
     const file = await Buffer.from(base64file.replace(/^data:image\/\w+;base64,/, ""), 'base64')
     const fileTyle = mime(file);
     identifier = `${identifier}.${fileTyle.ext}`
     var params = {
       Body: file,
-      Bucket: process.env.AWS_S3_BUCKET,
+      Bucket: bucket,
       ContentType: fileTyle.mime,
       Key: identifier
     };
