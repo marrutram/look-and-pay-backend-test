@@ -19,10 +19,10 @@ const PaymentsSchema = new Schema({
   date: String,
   hour: String, 
   balance: String,
+  user: String,
   products: {
     type: [ProductsSchema]
   },
-  user: String,
 },
 { 
   timestamps: { 

@@ -9,15 +9,15 @@ export const autheticate = async (resolve, root, args, context, info) => {
     if(!root && isExclude) {
       const passwordToken = process.env.JWT_SECRET || '';
       const token = checkToken(context);
-      await jwt.verify(token, passwordToken);
+      const verify = await jwt.verify(token, passwordToken);
+      context.authUser = verify;
     }
     
   } catch (e) {
     console.log("err the autheticate::", e);
     throw new Error('Not authorise.');
   }
-  const result = await resolve(root, args, context, info);
-  return result;
+  return await resolve(root, args, context, info);
 };
 
 const checkToken = (context) => {
