@@ -14,9 +14,16 @@ type User {
   updatedAt: Date
 }
 
+type UserResult {
+  name: String
+  email: String
+  lastnanme: String
+  token: String
+}
+
 type Mutation {
-  signup(email: String!, name: String!, lastname: String, rut: String, urlImagen: String!, password: String!, nameCard: String, numberCard: String, expDateCard: String):String,
-  login(email: String, password: String ): String
+  signup(email: String!, name: String!, lastname: String, rut: String, urlImagen: String!, password: String!, nameCard: String, numberCard: String, expDateCard: String): UserResult,
+  login(email: String, password: String ): UserResult
 }
 
 type Query {
