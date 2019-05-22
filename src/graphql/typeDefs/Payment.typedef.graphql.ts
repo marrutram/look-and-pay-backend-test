@@ -31,10 +31,10 @@ type Payment {
 
 type Mutation {
   createPayment(
-    balance: String, 
-    userImage: String, 
-    supermarket: String,
-    electronicBill: String,
+    balance: String!, 
+    userImage: String!, 
+    supermarket: String!,
+    electronicBill: String!,
     date: String,
     hour: String, 
     products: [ProductInput] ): Boolean

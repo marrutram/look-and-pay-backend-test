@@ -55,9 +55,9 @@ describe('Test for search Face', () => {
     await fs.writeFileSync(`${folderPictures}/base64/${imageUrl}-ignore.log`, bitmap, 'utf-8');
     const date = new Date();
     const imageName = `${date.getTime()}-${imageUrl.split(".")[0]}`;
-    // const imageUploaded = await bucket.putImage(imageName, bitmap, "payment");
-    // expect(imageUploaded.key).toBeDefined();
-    // expect(imageUploaded.ETag).toBeDefined();
+    const imageUploaded = await bucket.putImage(imageName, bitmap, "payment");
+    expect(imageUploaded.key).toBeDefined();
+    expect(imageUploaded.ETag).toBeDefined();
     let data = await rekognition.searchFace("1558550390040-caro-pago.jpg");
     console.log(JSON.stringify(data));
     expect('test').toEqual('test');   
