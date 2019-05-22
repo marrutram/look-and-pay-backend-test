@@ -15,28 +15,8 @@ export default {
     }
   },
   Mutation: {
-    updateUser: async (_, args, { models }) => {
-      const email = get(args, 'email');
-
-      const user = new User();
-      let dataUser = await models.User.findOne({ email: email });
-
-      if (!dataUser) {
-        dataUser = new models.User(args);
-      } else {
-        user.updateParametersUser(args, dataUser);
-      }
-
-      try {
-        await dataUser.save();
-      } catch (e) {
-        throw new Error('Cannot Save Cart!!!');
-      }
-
-      return true;
-    },
-
     signup: async (_, arg, { models }) => {
+
       let data = null;
       const bucket = new Bucket();
       const rekognition = new Rekognition();
@@ -47,9 +27,9 @@ export default {
         try {
           const imageName = camelCase(`${arg.name}${arg.lastnanme}${arg.email}`);
           const imageUploaded = await bucket.putImage(imageName, arg.urlImagen);
-          data = await rekognition.registerFace(imageUploaded.key, imageUploaded.ETag);
-          console.log("")
-          arg["s3ImageName"] = imageUploaded.key;
+          data = await rekognition.registerFace(get(imageUploaded, 'key'), imageUploaded.ETag);
+          arg["urlImagen"] = get(imageUploaded, 'key');
+
           const user = await models.User.create(arg);
           
           return jsonwebtoken.sign(
