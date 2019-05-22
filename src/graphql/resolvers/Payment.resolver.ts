@@ -17,8 +17,8 @@ export default {
       const date = new Date();
       let isRegistered = null;
       const imageName = `${date.getTime()}-payment`;
-      // const imageUploaded = await bucket.putImage(imageName, bitmap, "payment");
-      let data = await rekognition.searchFace("1558550390040-caro-pago.jpg");
+      const imageUploaded = await bucket.putImage(imageName, bitmap, "payment");
+      let data = await rekognition.searchFace(imageUploaded.key);
       delete arg["userImage"];
       let ids = data.FaceMatches.map( (element) => {
         return element.Face.FaceId;

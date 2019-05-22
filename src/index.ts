@@ -33,8 +33,8 @@ const server = new GraphQLServer({
   resolvers,
   context,
   middlewares: [
+    httplogger,
     autheticate, 
-    httplogger
   ]
 });
 
