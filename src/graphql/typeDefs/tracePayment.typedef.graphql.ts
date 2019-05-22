@@ -30,7 +30,7 @@ type Payment {
 }
 
 type Mutation {
-  createPayment(balance: String, user: String, products: [ProductInput] ): Boolean
+  createPayment(balance: String, userImage: String, products: [ProductInput] ): Boolean
 }
 
 type Query {

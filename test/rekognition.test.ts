@@ -18,18 +18,19 @@ describe('Test For register Face', () => {
     const bucket = new Bucket();
     
     let userData = {
-      email: "martinezjuana@gmail.com",
-      password: "",
-      name: "juana",
-      lastnanme: "martinez",
+      email: "carolyn.bravo@gmail.com",
+      password: "carolyn.bravo",
+      name: "carolyn",
+      lastnanme: "bravo",
       urlImagen: ""
     }
-    const imageUrl = "juana.jpg";
-    const folderPictures = path.join(__dirname, '../../pictures/free')
-    
-    const bitmap = await fs.readFileSync(`${folderPictures}/${imageUrl}`, {encoding: 'base64'});
-    expect(bitmap).toBeDefined();
+    const imageUrl = "carolyn.png";
+    const folderPictures = path.join(__dirname, 'images')
 
+    const bitmap = await fs.readFileSync(`${folderPictures}/pictures/${imageUrl}`, {encoding: 'base64'});
+    await fs.writeFileSync(`${folderPictures}/base64/${imageUrl}-ignore.log`, bitmap, 'utf-8');
+
+    expect(bitmap).toBeDefined();
     userData.urlImagen = bitmap;
     const imageName = camelCase(`${userData.name}${userData.lastnanme}${userData.email}`);
     const imageUploaded = await bucket.putImage(imageName, userData.urlImagen);
