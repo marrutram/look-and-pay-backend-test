@@ -1,13 +1,14 @@
 import * as jwt from 'jsonwebtoken';
-import { get, indexOf } from 'lodash';
+import { get, indexOf, words } from 'lodash';
 
 export const autheticate = async (resolve, root, args, context, info) => {
   try {
-    
-    const currentMutation = info.fieldName;
-    const excludeMutation = ['login', 'signup', 'createPayment'];
-    const isExclude = indexOf(excludeMutation, currentMutation) > -1 ? true : false;
 
+    const currentMutation = words(context.request.body.query);
+
+    const excludeMutation = ['login', 'signup', 'createPayment'];
+    const isExclude = indexOf(excludeMutation, currentMutation[1]) > -1 ? true : false;
+    
     if(!isExclude) {
       const passwordToken = process.env.JWT_SECRET || '';
       const models = get(context, 'models');

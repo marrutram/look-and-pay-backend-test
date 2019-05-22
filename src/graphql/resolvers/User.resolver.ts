@@ -34,10 +34,17 @@ export default {
           logger.log({level: 'info', message: 'Mutation - signup', 
             additional: { id: user.id, email: user.email } 
           });
-          return jsonwebtoken.sign(
+          const token = jsonwebtoken.sign(
             { id: user.id, email: user.email },
             process.env.JWT_SECRET,
             { expiresIn: '1y' });
+          
+          return {
+            name: user.name,
+            lastname: user.lastname,
+            email: user.email,
+            token: token
+          };
         } catch (err) {
           throw new Error(err.message); 
         }
@@ -56,11 +63,18 @@ export default {
         throw new Error('Incorrect password')
       }
 
-      return jsonwebtoken.sign(
+      const token = jsonwebtoken.sign(
         { id: user.id, email: user.email },
         process.env.JWT_SECRET,
         { expiresIn: '1d' }
       )
+
+      return {
+        name: user.name,
+        lastname: user.lastname,
+        email: user.email,
+        token: token
+      };
     }
 
   }
