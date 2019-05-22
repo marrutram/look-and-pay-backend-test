@@ -13,37 +13,14 @@ class Rekognition extends AWS.Rekognition {
       MaxFaces: 3,
       Image: {
         S3Object: {
-          Bucket: process.env.AWS_S3_BUCKET,
+          Bucket: process.env.AWS_S3_BUCKET_PAYMENT,
           Name: imageUrl
         }
       }
     };
     logger.log({level: 'info', message: 'Rekognition - searchFace', additional: params });
-    // return await this.searchFacesByImage(params).promise();
-    return await { SearchedFaceBoundingBox:
-      { Width: 0.6795538067817688,
-        Height: 0.5679137706756592,
-        Left: 0.18765287101268768,
-        Top: 0.22701628506183624 
-      },
-     SearchedFaceConfidence: 99.99989318847656,
-     FaceMatches: [ { 
-       Similarity: 99.99999237060547, 
-       Face: {
-        BoundingBox: {
-         Height: 0.3234420120716095, 
-         Left: 0.3233329951763153, 
-         Top: 0.5, 
-         Width: 0.24222199618816376
-        }, 
-        Confidence: 99.99829864501953, 
-        FaceId: "38271d79-7bc2-5efb-b752-398a8d575b85", 
-        ImageId: "d5631190-d039-54e4-b267-abd22c8647c5"
-       },
-      }
-    ],
-     FaceModelVersion: '4.0' 
-    }
+    return await this.searchFacesByImage(params).promise();
+
   }
 
   async registerFace(imageName: string, imageId: string) {

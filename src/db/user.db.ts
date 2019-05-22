@@ -45,7 +45,8 @@ const UserSchema = new Schema({
     type: String,
     required: false,
     unique: false
-  }
+  },
+  faceIds: [String]
 },
 { 
   timestamps: { 

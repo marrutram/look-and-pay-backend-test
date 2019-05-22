@@ -6,4 +6,5 @@ export const httplogger = async (resolve, root, args, context, info) => {
     level: 'info', 
     message: `HTTP - operation: ${info.operation.operation}: ${info.fieldName}`, 
     additional: args });
+  return await resolve(root, args, context, info);
 };

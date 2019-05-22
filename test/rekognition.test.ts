@@ -33,18 +33,18 @@ describe('Test For register Face', () => {
 
     userData.urlImagen = bitmap;
     const imageName = camelCase(`${userData.name}${userData.lastnanme}${userData.email}`);
-    const imageUploaded = await bucket.putImage(imageName, userData.urlImagen);
+    // const imageUploaded = await bucket.putImage(imageName, userData.urlImagen);
+    const imageUploaded = { "ETag": '"8f905c0a9397c81249bd6079e96f64f7"', "key": 'carolynbravocarolynBravoGmailCom.png' }
     expect(imageUploaded.key).toBeDefined();
     expect(imageUploaded.ETag).toBeDefined();
-    console.log(imageUploaded)
-    
     let data = await rekognition.registerFace(imageUploaded.key, imageUploaded.ETag)
+    let faces = data.FaceRecords.map((elem: object) => elem["Face"]["FaceId"]);
     expect(data.FaceRecords).toBeDefined();
   });
 })
 
 describe('Test for search Face', () => {
-  fit('Should return ok', async () => {
+  it('Should return ok', async () => {
     const rekognition = new Rekognition();
     const bucket = new Bucket();
     const folderPictures = path.join(__dirname, 'images')
@@ -54,17 +54,14 @@ describe('Test for search Face', () => {
     expect(bitmap).toBeDefined();
     await fs.writeFileSync(`${folderPictures}/base64/${imageUrl}-ignore.log`, bitmap, 'utf-8');
     const date = new Date();
-    const imageName = `${date.getTime()}-${imageUrl}`;
-    
+    const imageName = `${date.getTime()}-${imageUrl.split(".")[0]}`;
     const imageUploaded = await bucket.putImage(imageName, bitmap, "payment");
     expect(imageUploaded.key).toBeDefined();
     expect(imageUploaded.ETag).toBeDefined();
-    let data = await rekognition.searchFace(imageUrl)
-    console.log(data);
-
+    let data = await rekognition.searchFace("1558550683639-caro-pago.jpg");
+    console.log(JSON.stringify(data));
     expect('test').toEqual('test');   
   });
 })
-
 
 

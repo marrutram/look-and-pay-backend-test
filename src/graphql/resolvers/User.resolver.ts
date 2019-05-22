@@ -1,11 +1,10 @@
 import { get, map } from 'lodash';
-import User from '../../controllers/user.controller';
 import Bucket from '../../controllers/bucket.controller';
 import Rekognition from '../../controllers/rekognition.controller';
 import * as bcrypt from 'bcrypt';
 import * as jsonwebtoken from 'jsonwebtoken';
 import { camelCase } from 'lodash';
-require('dotenv').config();
+import { logger } from '../../logger';
 
 export default {
   Query: {
@@ -24,13 +23,17 @@ export default {
       
       if (!isRegistered) {
         try {
-          const imageName = camelCase(`${arg.name}${arg.lastnanme}${arg.email}`);
+          const imageName = camelCase(`${arg.name}${arg.lastname}${arg.email}`);
           const imageUploaded = await bucket.putImage(imageName, arg.urlImagen);
           data = await rekognition.registerFace(get(imageUploaded, 'key'), imageUploaded.ETag);
+          let faces = data.FaceRecords.map((elem: object) => elem["Face"]["FaceId"]);
           arg["urlImagen"] = get(imageUploaded, 'key');
+          arg["faceIds"] = await data.FaceRecords.map((elem: object) => elem["Face"]["FaceId"]);
 
           const user = await models.User.create(arg);
-          
+          logger.log({level: 'info', message: 'Mutation - signup', 
+            additional: { id: user.id, email: user.email } 
+          });
           return jsonwebtoken.sign(
             { id: user.id, email: user.email },
             process.env.JWT_SECRET,
