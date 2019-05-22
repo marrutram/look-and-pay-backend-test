@@ -1,24 +1,10 @@
 import { Schema, model } from 'mongoose';
 
 const ProductsSchema = new Schema({
-  description: {
-    type: String,
-    required: false,
-    unique: false,
-  },
-  count: {
-    type: String,
-    required: false,
-    unique: false,
-  },
-  balance: {
-    type: String,
-    required: false,
-    unique: false,
-  },
-  image: {
-    type: String,
-  }
+  description: String,
+  count: String,
+  balance: String,
+  image: String
 },
 { 
   timestamps: { 
@@ -28,21 +14,15 @@ const ProductsSchema = new Schema({
 });
 
 const PaymentsSchema = new Schema({
-  balance: {
-    type: String,
-    required: false,
-    unique: false,
-  },
+  supermarket: String,
+  electronicBill: String,
+  date: String,
+  hour: String, 
+  balance: String,
   products: {
-    type: [ProductsSchema],
-    required: false,
-    unique: false,
+    type: [ProductsSchema]
   },
-  user:  {
-    type: String,
-    required: false,
-    unique: false,
-  }
+  user: String,
 },
 { 
   timestamps: { 
@@ -51,6 +31,4 @@ const PaymentsSchema = new Schema({
   } 
 });
 
-export default model('Payments', PaymentsSchema);
-
-
+export default model('Payment', PaymentsSchema);
