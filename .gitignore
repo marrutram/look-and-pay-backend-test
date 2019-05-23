@@ -3,6 +3,6 @@ coverage
 .env
 dist
 logs
-
+test/*
 *.log
 **.DS_Store
