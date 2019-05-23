@@ -27,8 +27,8 @@ export default {
       }
       delete arg["userImage"];
       arg.user = user.id;
-      const pay = await models.Payment.create(arg);
-      return true;
+      await models.Payment.create(arg);
+      return user;
     }
   }
 };

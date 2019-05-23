@@ -43,7 +43,7 @@ type Mutation {
     electronicBill: String!,
     date: String,
     hour: String, 
-    products: [ProductInput] ): Boolean
+    products: [ProductInput] ): UserResult
 }
 
 type Query {
