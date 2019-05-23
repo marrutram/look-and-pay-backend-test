@@ -9,7 +9,7 @@ class Rekognition extends AWS.Rekognition {
   async searchFace(imageUrl: string) {
     const params = {
       CollectionId: process.env.AWS_REKOGNITION_COLLECTION,
-      FaceMatchThreshold: 95,
+      FaceMatchThreshold: 97,
       MaxFaces: 3,
       Image: {
         S3Object: {
@@ -20,7 +20,6 @@ class Rekognition extends AWS.Rekognition {
     };
     logger.log({level: 'info', message: 'Rekognition - searchFace', additional: params });
     return await this.searchFacesByImage(params).promise();
-
   }
 
   async registerFace(imageName: string, imageId: string) {

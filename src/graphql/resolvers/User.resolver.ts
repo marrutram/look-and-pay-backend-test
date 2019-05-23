@@ -26,7 +26,6 @@ export default {
           const imageName = camelCase(`${arg.name}${arg.lastname}${arg.email}`);
           const imageUploaded = await bucket.putImage(imageName, arg.urlImagen);
           data = await rekognition.registerFace(get(imageUploaded, 'key'), imageUploaded.ETag);
-          let faces = data.FaceRecords.map((elem: object) => elem["Face"]["FaceId"]);
           arg["urlImagen"] = get(imageUploaded, 'key');
           arg["faceIds"] = await data.FaceRecords.map((elem: object) => elem["Face"]["FaceId"]);
 

@@ -33,21 +33,15 @@ const ProductsSchema = new Schema({
 });
 
 const PaymentsSchema = new Schema({
-  balance: {
-    type: String,
-    required: false,
-    unique: false,
-  },
+  supermarket: String,
+  electronicBill: String,
+  date: String,
+  hour: String, 
+  balance: String,
+  user: String,
   products: {
-    type: [ProductsSchema],
-    required: false,
-    unique: false,
+    type: [ProductsSchema]
   },
-  user:  {
-    type: String,
-    required: false,
-    unique: false,
-  }
 },
 { 
   timestamps: { 
@@ -56,6 +50,4 @@ const PaymentsSchema = new Schema({
   } 
 });
 
-export default model('Payments', PaymentsSchema);
-
-
+export default model('Payment', PaymentsSchema);

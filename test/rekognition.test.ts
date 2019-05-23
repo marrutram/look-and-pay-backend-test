@@ -44,7 +44,7 @@ describe('Test For register Face', () => {
 })
 
 describe('Test for search Face', () => {
-  it('Should return ok', async () => {
+  fit('Should return ok', async () => {
     const rekognition = new Rekognition();
     const bucket = new Bucket();
     const folderPictures = path.join(__dirname, 'images')
@@ -58,7 +58,7 @@ describe('Test for search Face', () => {
     const imageUploaded = await bucket.putImage(imageName, bitmap, "payment");
     expect(imageUploaded.key).toBeDefined();
     expect(imageUploaded.ETag).toBeDefined();
-    let data = await rekognition.searchFace("1558550683639-caro-pago.jpg");
+    let data = await rekognition.searchFace("1558550390040-caro-pago.jpg");
     console.log(JSON.stringify(data));
     expect('test').toEqual('test');   
   });
