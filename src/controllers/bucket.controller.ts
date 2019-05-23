@@ -16,12 +16,13 @@ class Bucket extends AWS.S3 {
     }
 
     if (type === "payment"){
-      bucket =  process.env.AWS_S3_BUCKET_PAYMENT;
+      bucket = process.env.AWS_S3_BUCKET_PAYMENT;
     }
     const file = await Buffer.from(base64file.replace(/^data:image\/\w+;base64,/, ""), 'base64')
     const fileTyle = mime(file);
     identifier = `${identifier}.${fileTyle.ext}`
     var params = {
+      ACL: "public-read",
       Body: file,
       Bucket: bucket,
       ContentType: fileTyle.mime,

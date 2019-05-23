@@ -28,5 +28,6 @@ type Mutation {
 
 type Query {
   users: [User!]!
+  myInfo: User
 }
 `;

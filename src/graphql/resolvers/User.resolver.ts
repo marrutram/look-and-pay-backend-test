@@ -9,8 +9,10 @@ import { logger } from '../../logger';
 export default {
   Query: {
     users: async (_, args, { models }) => {
-      const Users = await models.User.find({});
-      return Users;
+      return await models.User.find({});
+    },
+    myInfo: async (_, args, { models, authUser }) => {
+      return await models.User.findOne({_id: authUser.id});
     }
   },
   Mutation: {
@@ -26,7 +28,7 @@ export default {
           const imageName = camelCase(`${arg.name}${arg.lastname}${arg.email}`);
           const imageUploaded = await bucket.putImage(imageName, arg.urlImagen);
           data = await rekognition.registerFace(get(imageUploaded, 'key'), imageUploaded.ETag);
-          arg["urlImagen"] = get(imageUploaded, 'key');
+          arg["urlImagen"] = `${process.env.AWS_URL_S3_BUCKET}/${get(imageUploaded, 'key')}`;
           arg["faceIds"] = await data.FaceRecords.map((elem: object) => elem["Face"]["FaceId"]);
 
           const user = await models.User.create(arg);
