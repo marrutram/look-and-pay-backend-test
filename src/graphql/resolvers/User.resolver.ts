@@ -27,7 +27,8 @@ export default {
         const imageName = camelCase(`${arg.name}${arg.lastname}${arg.email}`);
         const imageUploaded = await bucket.putImage(imageName, arg.urlImagen);
         const existRekognition = await rekognition.searchFace(imageUploaded.key, "register");
-        if (!isRegistered) {
+        if (!existRekognition) {
+          bucket.deleteImage(imageUploaded.key);
           throw new Error('There is another user with the same face'); 
         }
         try {

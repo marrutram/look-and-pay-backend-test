@@ -8,6 +8,27 @@ class Bucket extends AWS.S3 {
     super()
   }
 
+  deleteImage(identifier:string, type?:string){
+    let bucket =  process.env.AWS_S3_BUCKET;
+    let data = null;
+
+    if (type === "payment"){
+      bucket = process.env.AWS_S3_BUCKET_PAYMENT;
+    }
+    var params = {
+      Bucket: bucket, 
+      Key: identifier
+    };
+
+    try {
+      logger.log({level: 'info', message: 'Bucket - deleteImage', additional: params });
+      data = this.putObject(params).promise();
+    } catch (err) {
+      throw new Error(err.message); 
+    }
+    return data;
+  }
+
   async putImage(identifier:string, base64file:string, type?:string){
     let data = null;
     let bucket =  process.env.AWS_S3_BUCKET;
