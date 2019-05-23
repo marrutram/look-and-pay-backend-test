@@ -1,4 +1,9 @@
 pipeline:
+  build:
+    image: node:11-alpine
+    commands:
+    when:
+      branch: master
 
   publish:
     image: plugins/docker
