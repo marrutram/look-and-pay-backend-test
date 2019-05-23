@@ -17,7 +17,7 @@ type User {
 type UserResult {
   name: String
   email: String
-  lastnanme: String
+  lastname: String
   token: String
 }
 
