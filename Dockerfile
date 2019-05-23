@@ -5,12 +5,17 @@ RUN mkdir -p /home/node/app/
 
 RUN apk update && apk add --no-cache ca-certificates
 
+RUN apk --no-cache add --virtual native-deps \
+  g++ gcc libgcc libstdc++ linux-headers autoconf automake make nasm python git && \
+  npm install --quiet node-gyp -g
+
 WORKDIR /home/node/app
 
 COPY . .
 
-RUN npm cache clean --force\
-    && npm install typescript -g\
+RUN npm cache clean -f \
+    && npm rebuild bcrypt --build-from-source \
+    && npm install typescript -g \
     && npm install
 
 RUN tsc

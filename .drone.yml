@@ -2,9 +2,6 @@ pipeline:
   build:
     image: node:11-alpine
     commands:
-      - npm i --quiet --silent --non-interactive
-      - npm test
-      - npm run build 
     when:
       branch: master
 
