@@ -12,7 +12,7 @@ input ProductInput {
 input UserInput {
   name: String
   email: String
-  lastnanme: String
+  lastname: String
   rut: String
   urlImagen: String
 }

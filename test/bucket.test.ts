@@ -19,7 +19,7 @@ fdescribe('Test Upload image to S3', () => {
       email: "martinezjuana@gmail.com",
       password: "",
       name: "juana",
-      lastnanme: "martinez",
+      lastname: "martinez",
       urlImagen: ""
     }
     
@@ -27,7 +27,7 @@ fdescribe('Test Upload image to S3', () => {
     expect(bitmap).toBeDefined();
 
     userData.urlImagen = bitmap;
-    const imageName = camelCase(`${userData.name}${userData.lastnanme}${userData.email}`);
+    const imageName = camelCase(`${userData.name}${userData.lastname}${userData.email}`);
     const imageUploaded = await bucket.putImage(imageName, userData.urlImagen);
     expect(imageUploaded.key).toBeDefined();
   });
@@ -39,7 +39,7 @@ fdescribe('Test Upload image to S3', () => {
       email: "martinezjuana@gmail.com",
       password: "",
       name: "juana",
-      lastnanme: "martinez",
+      lastname: "martinez",
       urlImagen: ""
     }
     
@@ -47,7 +47,7 @@ fdescribe('Test Upload image to S3', () => {
     expect(bitmap).toBeDefined();
 
     userData.urlImagen = bitmap;
-    const imageName = camelCase(`${userData.name}${userData.lastnanme}${userData.email}`);
+    const imageName = camelCase(`${userData.name}${userData.lastname}${userData.email}`);
     
     try {
       await bucket.putImage(imageName, "bitmap");
