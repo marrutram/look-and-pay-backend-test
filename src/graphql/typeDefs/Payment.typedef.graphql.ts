@@ -27,7 +27,11 @@ type Product {
 
 type Payment {
   balance: String
+  supermarket: String
+  electronicBill: String
   user: User
+  date: String
+  hour: String
   products: [Product]
 }
 
