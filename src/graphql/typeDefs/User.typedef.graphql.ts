@@ -17,8 +17,9 @@ type User {
 type UserResult {
   name: String
   email: String
-  lastnanme: String
-  token: String
+  lastname: String
+  token: String,
+  urlImagen: String
 }
 
 type Mutation {

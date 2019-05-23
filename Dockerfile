@@ -9,7 +9,7 @@ WORKDIR /home/node/app
 
 COPY . .
 
-RUN npm cache clean --force\
+RUN npm cache clean -f \
     && npm install typescript -g\
     && npm install
 
