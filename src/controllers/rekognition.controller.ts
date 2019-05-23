@@ -6,14 +6,19 @@ class Rekognition extends AWS.Rekognition {
   constructor() {
     super()
   }
-  async searchFace(imageUrl: string) {
+
+  async searchFace(imageUrl: string, type?:string) {
+    let bucket = process.env.AWS_S3_BUCKET_PAYMENT;
+    if (type === "register"){
+      bucket = process.env.AWS_S3_BUCKET;
+    }
     const params = {
       CollectionId: process.env.AWS_REKOGNITION_COLLECTION,
       FaceMatchThreshold: 97,
       MaxFaces: 3,
       Image: {
         S3Object: {
-          Bucket: process.env.AWS_S3_BUCKET_PAYMENT,
+          Bucket: bucket,
           Name: imageUrl
         }
       }

@@ -24,11 +24,15 @@ export default {
       const isRegistered = await models.User.findOne({ email: arg.email });
       
       if (!isRegistered) {
+        const imageName = camelCase(`${arg.name}${arg.lastname}${arg.email}`);
+        const imageUploaded = await bucket.putImage(imageName, arg.urlImagen);
+        const existRekognition = await rekognition.searchFace(imageUploaded.key, "register");
+        if (!isRegistered) {
+          throw new Error('There is another user with the same face'); 
+        }
         try {
-          const imageName = camelCase(`${arg.name}${arg.lastname}${arg.email}`);
-          const imageUploaded = await bucket.putImage(imageName, arg.urlImagen);
-          data = await rekognition.registerFace(get(imageUploaded, 'key'), imageUploaded.ETag);
-          arg["urlImagen"] = `${process.env.AWS_URL_S3_BUCKET}/${get(imageUploaded, 'key')}`;
+          data = await rekognition.registerFace(imageUploaded.key, imageUploaded.ETag);
+          arg["urlImagen"] = `${process.env.AWS_URL_S3_BUCKET}/${imageUploaded.key}`;
           arg["faceIds"] = await data.FaceRecords.map((elem: object) => elem["Face"]["FaceId"]);
 
           const user = await models.User.create(arg);
