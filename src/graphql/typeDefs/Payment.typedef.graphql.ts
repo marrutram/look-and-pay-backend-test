@@ -6,6 +6,7 @@ input ProductInput {
   count: Int
   picture: String
   balance: String
+  unit: String
 }
 
 input UserInput {
@@ -21,6 +22,7 @@ type Product {
   count: Int
   picture: String
   balance: String
+  unit: String
 }
 
 type Payment {

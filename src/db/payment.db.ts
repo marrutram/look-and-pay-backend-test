@@ -1,10 +1,29 @@
 import { Schema, model } from 'mongoose';
 
 const ProductsSchema = new Schema({
-  description: String,
-  count: String,
-  balance: String,
-  image: String
+  description: {
+    type: String,
+    required: false,
+    unique: false,
+  },
+  count: {
+    type: String,
+    required: false,
+    unique: false,
+  },
+  balance: {
+    type: String,
+    required: false,
+    unique: false,
+  },
+  image: {
+    type: String,
+  },
+  unit: {
+    type: String,
+    required: false,
+    unique: false,
+  },
 },
 { 
   timestamps: { 
