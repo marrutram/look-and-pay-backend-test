@@ -18,7 +18,12 @@ const ProductsSchema = new Schema({
   },
   image: {
     type: String,
-  }
+  },
+  unit: {
+    type: String,
+    required: false,
+    unique: false,
+  },
 },
 { 
   timestamps: { 

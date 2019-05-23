@@ -11,7 +11,6 @@ import { httplogger } from './middleware/httplogger';
 
 require('dotenv').config();
 
-
 if (!AWS.config.region) {
   AWS.config.update({region:process.env.AWS_DEFAULT_REGION});
 }
