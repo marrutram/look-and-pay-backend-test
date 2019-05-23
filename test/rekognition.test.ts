@@ -21,7 +21,7 @@ describe('Test For register Face', () => {
       email: "carolyn.bravo@gmail.com",
       password: "carolyn.bravo",
       name: "carolyn",
-      lastnanme: "bravo",
+      lastname: "bravo",
       urlImagen: ""
     }
     const imageUrl = "carolyn.png";
@@ -32,7 +32,7 @@ describe('Test For register Face', () => {
     await fs.writeFileSync(`${folderPictures}/base64/${imageUrl}-ignore.log`, bitmap, 'utf-8');
 
     userData.urlImagen = bitmap;
-    const imageName = camelCase(`${userData.name}${userData.lastnanme}${userData.email}`);
+    const imageName = camelCase(`${userData.name}${userData.lastname}${userData.email}`);
     // const imageUploaded = await bucket.putImage(imageName, userData.urlImagen);
     const imageUploaded = { "ETag": '"8f905c0a9397c81249bd6079e96f64f7"', "key": 'carolynbravocarolynBravoGmailCom.png' }
     expect(imageUploaded.key).toBeDefined();

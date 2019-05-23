@@ -44,7 +44,8 @@ export default {
             name: user.name,
             lastname: user.lastname,
             email: user.email,
-            token: token
+            token: token,
+            urlImagen: arg["urlImagen"]
           };
         } catch (err) {
           throw new Error(err.message); 
@@ -74,7 +75,8 @@ export default {
         name: user.name,
         lastname: user.lastname,
         email: user.email,
-        token: token
+        token: token,
+        urlImagen: user.urlImagen
       };
     }
 
