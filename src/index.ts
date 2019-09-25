@@ -16,11 +16,11 @@ if (!AWS.config.region) {
 }
 
 const db = startDB({
-  user: process.env.MONGO_USERNAME || 'graphql', 
-  pwd: process.env.MONGO_PASSWORD || 'graphql', 
-  db: process.env.MONGO_DATABASE || 'lookAndPay',
-  host: process.env.MONGO_SERVICE_HOST || 'mongodb',
-  url:process.env.MONGO_SERVICE_URL || '127.0.0.1:27017' 
+  user: process.env.MONGO_USERNAME, 
+  pwd: process.env.MONGO_PASSWORD, 
+  db: process.env.MONGO_DATABASE,
+  host: process.env.MONGO_SERVICE_HOST,
+  url:process.env.MONGO_SERVICE_URL
 });
 
 const pkg = require('../package.json');
